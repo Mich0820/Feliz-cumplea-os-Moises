@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Cumpleaños Moises!</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(45deg, #2F2F2F, #121212); /* Fondo con gradiente oscuro */
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: #1E56A0; /* Azul rey más brillante */
+      font-size: 50px;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #1E56A0; /* Efecto neón */
+    }
+    #mensajeCumpleanos {
+      font-size: 24px;
+      margin-top: 50px;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700; /* Efecto dorado */
+    }
+    #btnJuego {
+      background-color: #4B5320; /* Verde oliva */
+      color: white;
+      font-size: 22px;
+      padding: 12px 30px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 30px;
+      font-family: 'Arial', sans-serif;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 15px #4B5320; /* Sombra suave y brillante */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #btnJuego:hover {
+      background-color: #3A4212; /* Verde oliva más oscuro */
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #1E56A0, 0 0 40px #FFD700; /* Brillo dorado al pasar el ratón */
+    }
+    #juegoContainer {
+      display: none;
+      text-align: center;
+      padding-top: 50px;
+    }
+    canvas {
+      background-image: url('https://i.imgur.com/MQmL8FV.jpg');
+      background-size: cover;
+      border: 5px solid #1E56A0; /* Borde más grueso y llamativo */
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700; /* Brillo dorado */
+    }
+    #puntaje {
+      font-size: 30px;
+      color: #FFD700; /* Amarillo brillante */
+      font-weight: bold;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700; /* Efecto neón amarillo */
+    }
+    .mensajeFinal {
+      font-size: 26px;
+      color: #fff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700; /* Efecto dorado */
+    }
+    .brillante {
+      text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mensajeCumpleanos">
+    <h1>¡Feliz Cumpleaños Moises! 🎉🎈</h1>
+    <p>¡Te deseo lo mejor en tu día! 🎂</p>
+    <p><strong>Dale click al botón y tendrás una sorpresa de cumpleaños 🎁🎉</strong></p>
+    <button id="btnJuego" onclick="empezarJuego()">¡SORPRESA!</button>
+  </div>
+
+  <div id="juegoContainer">
+    <h1>Monkey Moises: Cash & Shots 🐵💵🍷</h1>
+    <div id="puntaje">Puntos: 0</div>
+    <canvas id="juego" width="600" height="400"></canvas>
+    <p class="mensajeFinal brillante">¡Feliz Cumpleaños! 🥳</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("juego");
+    const ctx = canvas.getContext("2d");
+
+    const jugador = { x: 280, y: 350, w: 40, h: 40 };
+    const objetos = [];
+    const buenos = ["💵", "🍷"];
+    const malos = ["💣"];
+    let puntaje = 0;
+
+    function dibujarJugador() {
+      ctx.font = "28px Arial";
+      ctx.fillText("🐵", jugador.x + 5, jugador.y + 30);
+    }
+
+    function crearObjeto() {
+      const tipo = Math.random() < 0.7 ? "bueno" : "malo";
+      const simbolo = tipo === "bueno" ? 
+        buenos[Math.floor(Math.random() * buenos.length)] : 
+        malos[Math.floor(Math.random() * malos.length)];
+      objetos.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -30,
+        simbolo,
+        tipo,
+        velocidad: 2 + Math.random() * 2
+      });
+    }
+
+    function moverObjetos() {
+      for (let obj of objetos) {
+        obj.y += obj.velocidad;
+      }
+    }
+
+    function dibujarObjetos() {
+      ctx.font = "30px Arial";
+      for (let obj of objetos) {
+        ctx.fillText(obj.simbolo, obj.x, obj.y);
+      }
+    }
+
+    function detectarColisiones() {
+      for (let i = objetos.length - 1; i >= 0; i--) {
+        const obj = objetos[i];
+        if (
+          obj.x < jugador.x + jugador.w &&
+          obj.x + 30 > jugador.x &&
+          obj.y < jugador.y + jugador.h &&
+          obj.y + 30 > jugador.y
+        ) {
+          if (obj.tipo === "bueno") {
+            puntaje += 10;
+          } else {
+            puntaje -= 20;
+          }
+          objetos.splice(i, 1);
+        }
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" && jugador.x > 0) jugador.x -= 20;
+      if (e.key === "ArrowRight" && jugador.x < canvas.width - jugador.w) jugador.x += 20;
+    });
+
+    function actualizar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dibujarJugador();
+      moverObjetos();
+      dibujarObjetos();
+      detectarColisiones();
+      document.getElementById("puntaje").innerText = `Puntos: ${puntaje}`;
+    }
+
+    function empezarJuego() {
+      document.getElementById("mensajeCumpleanos").style.display = "none";
+      document.getElementById("juegoContainer").style.display = "block";
+      setInterval(crearObjeto, 800);
+      const loop = setInterval(actualizar, 30);
+
+      setTimeout(() => {
+        clearInterval(loop);
+        alert(`🎉 ¡Bien jugado, Moises! 🐵\nTe llevaste ${puntaje} puntos de billete y trago 💵🍷`);
+      }, 30000);
+    }
+  </script>
+
+</body>
+</html>
