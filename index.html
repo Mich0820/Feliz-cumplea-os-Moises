@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(45deg, #2F2F2F, #121212);
+      background: linear-gradient(45deg, #2F2F2F, #121212); /* Fondo con gradiente oscuro */
       color: white;
       text-align: center;
       overflow: hidden;
@@ -20,19 +20,19 @@
     }
     h1 {
       font-family: 'Montserrat', sans-serif;
-      color: #1E56A0;
+      color: #1E56A0; /* Azul rey más brillante */
       font-size: 50px;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #1E56A0;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #1E56A0; /* Efecto neón */
     }
     #mensajeCumpleanos {
       font-size: 24px;
       margin-top: 50px;
       font-family: 'Arial', sans-serif;
       color: #fff;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700; /* Efecto dorado */
     }
     #btnJuego {
-      background-color: #4B5320;
+      background-color: #4B5320; /* Verde oliva */
       color: white;
       font-size: 22px;
       padding: 12px 30px;
@@ -41,13 +41,13 @@
       border-radius: 8px;
       margin-top: 30px;
       font-family: 'Arial', sans-serif;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 15px #4B5320;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 15px #4B5320; /* Sombra suave y brillante */
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     #btnJuego:hover {
-      background-color: #3A4212;
+      background-color: #3A4212; /* Verde oliva más oscuro */
       transform: scale(1.1);
-      box-shadow: 0 0 20px #1E56A0, 0 0 40px #FFD700;
+      box-shadow: 0 0 20px #1E56A0, 0 0 40px #FFD700; /* Brillo dorado al pasar el ratón */
     }
     #juegoContainer {
       display: none;
@@ -55,23 +55,24 @@
       padding-top: 50px;
     }
     canvas {
-      background-color: #000; /* Fondo negro sólido */
-      border: 5px solid #1E56A0;
+      background-image: url('https://i.imgur.com/MQmL8FV.jpg');
+      background-size: cover;
+      border: 5px solid #1E56A0; /* Borde más grueso y llamativo */
       border-radius: 10px;
       display: block;
       margin: 0 auto;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700; /* Brillo dorado */
     }
     #puntaje {
       font-size: 30px;
-      color: #FFD700;
+      color: #FFD700; /* Amarillo brillante */
       font-weight: bold;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px #FFD700; /* Efecto neón amarillo */
     }
     .mensajeFinal {
       font-size: 26px;
       color: #fff;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px #FFD700; /* Efecto dorado */
     }
     .brillante {
       text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
@@ -132,7 +133,7 @@
     function dibujarObjetos() {
       ctx.font = "30px Arial";
       for (let obj of objetos) {
-        ctx.fillText(obj.symbol || obj.simbolo, obj.x, obj.y);
+        ctx.fillText(obj.simbolo, obj.x, obj.y);
       }
     }
 
@@ -166,7 +167,7 @@
       moverObjetos();
       dibujarObjetos();
       detectarColisiones();
-      document.getElementById("puntaje").innerText = `Puntos: ${puntaje}`;
+      document.getElementById("puntaje").innerText = Puntos: ${puntaje};
     }
 
     function empezarJuego() {
@@ -177,10 +178,7 @@
 
       setTimeout(() => {
         clearInterval(loop);
-        alert(`🎉 ¡Bien jugado, Moises! 🐵\nTe llevaste ${puntaje} puntos de billete y trago 💵🍷`);
+        alert(🎉 ¡Bien jugado, Moises! 🐵\nTe llevaste ${puntaje} puntos de billete y trago 💵🍷);
       }, 30000);
     }
   </script>
-
-</body>
-</html>
